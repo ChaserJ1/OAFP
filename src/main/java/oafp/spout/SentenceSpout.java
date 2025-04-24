@@ -30,6 +30,7 @@ public class SentenceSpout extends BaseRichSpout {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("[Spout] 发送数据: " + sentences[index]);
     }
 
     @Override
