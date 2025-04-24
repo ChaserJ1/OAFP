@@ -113,7 +113,7 @@ public class Main {
         Thread.sleep(5000);
         RecoveryLogger.exportResults("output/g3_result");
         double score = RecoveryLogger.jaccardSimilarity();
-        System.out.printf(">>> 精度评估完成，Jaccard 相似度 = %.3f\n", score);
+        System.out.printf(">>> 精度评估完成，相似度 = %.3f\n", score);
 
 
 

@@ -23,19 +23,25 @@ public class OVTEvaluator {
      * 假设某个 task 失败，计算该情况下的整体输出有效性
      */
     public double evaluateOVTWithFailure(String failedTaskId) {
+        // 首先查找所有节点到sink节点的路径
         List<List<OperatorNode>> paths = topology.findAllPathsToSink(sink);
+
         double total = 0.0;
+        // 计算每条路径的输出有效性
         for (List<OperatorNode> path : paths) {
-            double pathDV = 1.0;
+            double pathDV = 1.0; // 初始为1.0，即100%
+
+            // 计算路径上每个节点的输出有效性
             for (OperatorNode node : path) {
+                // 如果为失败节点，则有效性为采样率
                 if (node.id.equals(failedTaskId)) {
-                    pathDV *= node.samplingRatio; // βi = ri if failed
+                    pathDV *= node.samplingRatio;
                 } else {
-                    pathDV *= 1.0; // βi = 1.0 if alive
+                    pathDV *= 1.0;
                 }
             }
             total += pathDV;
         }
-        return total / paths.size(); // mean of all DV_out at sink
+        return total / paths.size(); // 以平均值作为整体的输出有效性
     }
 }
